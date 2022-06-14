@@ -23,11 +23,15 @@ public class GUIAnalizadorLexico extends javax.swing.JFrame {
      */
     public GUIAnalizadorLexico() {
         initComponents();
+        initTable();
+        
+    }
+    
+    public void initTable(){
         dataTable = new DefaultTableModel();
         dataTable.addColumn("Tokens - Lexema");
         dataTable.addColumn("Tipo");
         this.jTableTokens.setModel(dataTable);
-        
     }
 
     /**
@@ -156,6 +160,7 @@ public class GUIAnalizadorLexico extends javax.swing.JFrame {
     private void jButtonCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCleanActionPerformed
         // TODO add your handling code here:
         jTextFieldSourceCode.setText("");
+        initTable();
     }//GEN-LAST:event_jButtonCleanActionPerformed
 
     /**
