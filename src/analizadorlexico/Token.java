@@ -34,6 +34,10 @@ public class Token {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-    
+
+    @Override
+    public String toString() {
+        return  " Lexema : " + lexema + " | Tipo : " + tipo;
+    }
     
 }

@@ -10,13 +10,16 @@ package analizadorlexico;
  * @author sanma
  */
 public class Patrones {
-    final static String RESERVADA [] = {"abstract","assert","boolean","boolean","byte","case","catch","char","class","continue","default","do","double","else","exports","extends","final","finally","float","for","if","implements","import","instanceof","int","interface","long","module","native","new","package","private","protected","public","requires","return","short","static","super","switch","syncronized","this","throw","throws","transient","try","void","volatile","while","true","null","false","var","const","goto","String"};
+    final static String RESERVADA [] = {"abstract","assert","boolean","boolean","byte","case","catch","char","class","continue","default","do","double","else","exports","extends","false","final","finally","float","for","if","implements","import","instanceof","int","interface","long","module","native","new","package","private","protected","public","requires","return","short","static","super","switch","syncronized","this","throw","throws","transient","try","true","void","volatile","while","null","var","const","goto","String"};
     final static String COMILLA = "\"";
     final static String NUMERO = "[+-]?\\d*(\\.\\d+)?";
     final static String LETRA [] = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","ñ","o","p","q","r","s","t","u","v","w","x","y","z","A","B","C","D","E","F","G","H","I","J","K","L","M","N","Ñ","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
     final static String OPERADORES_ARITMETICOS [] = {"+","-","*","/"};
-    final static String OPERADORES_LOGICOS [] = {"=","==","<",">","<=",">=","!"};
-    final static String OTROS_SIMBOLOS [] = {"#","$","%","&","'","(",")","*","+",",","-",".",":","|","~"};
+    final static String OPERADORES_LOGICOS [] = {"==","<",">","<=",">=","!"};
+    final static String TERMINADOR = ";";
+    final static String ASIGNACION  = "=";
+    final static String OTROS_SIMBOLOS [] = {"#","$","%","&","'","(",")","*","+",",","-",":","|","~",";","="};
+    final static String DELIMITADOR [] = {"(",")","[","]"};
     
     public static boolean esReservada(String cadena){
         for (String reservada: RESERVADA) {
@@ -62,10 +65,27 @@ public class Patrones {
         return false;
     }
     
+    public static boolean esAsignacion(String cadena){
+        return cadena.equals(ASIGNACION);
+    }
+    
+    public static boolean esTerminador(String cadena){
+        return cadena.equals(TERMINADOR);
+    }
+    
     
     public static boolean esLetra(String cadena){
         for (String letra: LETRA) {
             if (letra.equals(cadena)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public static boolean esDelimitador(String cadena){
+        for (String delimitador: DELIMITADOR) {
+            if (delimitador.equals(cadena)) {
                 return true;
             }
         }

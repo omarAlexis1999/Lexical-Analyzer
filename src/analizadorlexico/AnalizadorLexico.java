@@ -23,10 +23,11 @@ public class AnalizadorLexico {
         this.codigoFuente = codigoFuente+" ";
         this.estado = 0;
         this.lexema = "";
-        analizador();
+        analyzer();
+        printTokens();
     }
     
-    private void analizador(){
+    private void analyzer(){
         boolean esCadena = false;
         
         for (int i = 0; i < codigoFuente.length()-1; i++) {
@@ -34,102 +35,74 @@ public class AnalizadorLexico {
             String caracterSiguiente = codigoFuente.charAt(i+1)+"";
             
             if (!esCadena) {
-                if (Patrones.esComilla(caracterSiguiente) || Patrones.esOperadorAritmetico(caracterSiguiente) || Patrones.esOperadorLogico(caracterSiguiente) || Patrones.esOtroSimbolo(caracterSiguiente)) {
-                    if (Patrones.esReservada(lexema)) {
+                lexema += caracter;
+                System.out.println(lexema);
+                
+                if (caracterSiguiente.equals(" ") || Patrones.esOperadorAritmetico(caracterSiguiente) || Patrones.esOperadorLogico(caracterSiguiente) || Patrones.esOtroSimbolo(caracterSiguiente)) {
+                    
+                    if(Patrones.esAsignacion(lexema) && !Patrones.esAsignacion(caracterSiguiente)){
+                        tokens.add(new Token(lexema, "Asignacion"));
+                        lexema = "";
+                    }else if(Patrones.esTerminador(lexema)){
+                        tokens.add(new Token(lexema, "Terminador"));
+                        lexema = "";
+                    }else if (Patrones.esReservada(lexema)) {
                         tokens.add(new Token(lexema, "Reservada"));
                         lexema = "";
                     }else if(Patrones.esIdentificador(lexema)){
                         tokens.add(new Token(lexema, "Identificador"));
                         lexema = "";
-                    }else if(Patrones.esOperadorLogico(lexema)){
+                    }else if(Patrones.esOperadorLogico(lexema) && !Patrones.esOperadorLogico(lexema+caracterSiguiente)){
                         tokens.add(new Token(lexema, "Operador Logico"));
                         lexema = "";
                     }else if(Patrones.esOperadorAritmetico(lexema)){
                         tokens.add(new Token(lexema, "Operador Aritmetico"));
                         lexema = "";
                     }else if(Patrones.esNumero(lexema)){
-                        
-                    }else if(Patrones.esComilla(lexema)){
-                        esCadena = true;
+                        tokens.add(new Token(lexema, "Numero"));
+                        lexema = "";
+                    }else if(Patrones.esDelimitador(lexema)){
+                        tokens.add(new Token(lexema, "Delimitador"));
+                        lexema = "";
                     }
-                }else{
-                    lexema += caracter;
+                }else if(Patrones.esComilla(caracter)){
+                    esCadena = true;
+                }else if(Patrones.esAsignacion(lexema) && !Patrones.esAsignacion(caracterSiguiente)){
+                    tokens.add(new Token(lexema, "Asignacion"));
+                    lexema = "";
+                }else if(Patrones.esOperadorAritmetico(lexema)){
+                        tokens.add(new Token(lexema, "Operador Aritmetico"));
+                        lexema = "";
+                }else if(Patrones.esOperadorLogico(lexema) && !Patrones.esOperadorLogico(lexema+caracterSiguiente)){
+                        tokens.add(new Token(lexema, "Operador Logico"));
+                        lexema = "";
+                }else if(Patrones.esDelimitador(lexema)){
+                        tokens.add(new Token(lexema, "Delimitador"));
+                        lexema = "";
                 }
+                
+                if(caracter.equals(" ")){
+                    lexema = "";
+                }
+                
             }else{
                 lexema += caracter;
-                
-            }
-            
-            
-            
-            
-            switch(estado){
-                // Inicio | Espacios
-                case 0:
-                    if (caracter.equals(" ")) {
-                        estado = 0;
-                    }else if (Patrones.esLetra(caracter)) {
-                        estado = 1;
-                    }
-                    else if(Patrones.esNumero(caracter)){
-                        estado = 2;
-                    }else if(Patrones.esOperadorAritmetico(caracter)){
-                        estado = 3;
-                    }else if(Patrones.esOperadorLogico(caracter)){
-                        estado = 4;
-                    }else if(Patrones.esOtroSimbolo(caracter)){
-                        estado = 5;
-                    }
-                    lexema = caracter;
-                break;
-                
-                // Letras
-                case 1:
-                    if (caracter.equals(" ")) {
-                        estado = 0;
-                    }else if (Patrones.esLetra(caracter)) {
-                        lexema += caracter;
-                        
-                        if (caracterSiguiente.equals(" ")) {
-                            tokens.add(new Token(lexema, lexema));
-                        }
-                        estado = 1;
-                        
-                    }else if(Patrones.esNumero(caracter)){
-                        if (caracterSiguiente.equals(" ")) {
-                            
-                        }
-                        estado = 2;
-                    }else if(Patrones.esOperadorAritmetico(caracter)){
-                        estado = 3;
-                    }else if(Patrones.esOperadorLogico(caracter)){
-                        estado = 4;
-                    }else if(Patrones.esOtroSimbolo(caracter)){
-                        estado = 5;
-                    }
-                break;
-                
-                // Numeros
-                case 2:
-                    
-                break;
-                
-                // Operador Aritmetico
-                case 3:
-                    
-                break;
-                
-                // Operador Logico
-                case 4:
-                    
-                break;
-                
-                // Otro Simbolo
-                case 5:
-                    
-                break;
+                if(Patrones.esComilla(caracter)){
+                    tokens.add(new Token(lexema, "Cadena"));
+                    lexema = "";
+                    esCadena = false;
+                }
             }
         }
+    }
+    
+    public void printTokens(){
+        System.out.println("------------------Codigo Fuente------------------");
+        System.out.println(codigoFuente);
+        System.out.println("------------------TOKENS------------------");
+        for(Token token : tokens){
+            System.out.println(token);
+        }    
     }
 
     
