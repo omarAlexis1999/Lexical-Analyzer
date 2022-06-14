@@ -24,7 +24,7 @@ public class AnalizadorLexico {
         this.estado = 0;
         this.lexema = "";
         analyzer();
-        printTokens();
+        //printTokens();
     }
     
     private void analyzer(){
@@ -36,7 +36,6 @@ public class AnalizadorLexico {
             
             if (!esCadena) {
                 lexema += caracter;
-                System.out.println(lexema);
                 
                 if (caracterSiguiente.equals(" ") || Patrones.esOperadorAritmetico(caracterSiguiente) || Patrones.esOperadorLogico(caracterSiguiente) || Patrones.esOtroSimbolo(caracterSiguiente)) {
                     
@@ -104,6 +103,41 @@ public class AnalizadorLexico {
             System.out.println(token);
         }    
     }
+
+    public ArrayList<Token> getTokens() {
+        return tokens;
+    }
+
+    public void setTokens(ArrayList<Token> tokens) {
+        this.tokens = tokens;
+    }
+
+    public String getCodigoFuente() {
+        return codigoFuente;
+    }
+
+    public void setCodigoFuente(String codigoFuente) {
+        this.codigoFuente = codigoFuente;
+    }
+
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }
+
+    public String getLexema() {
+        return lexema;
+    }
+
+    public void setLexema(String lexema) {
+        this.lexema = lexema;
+    }
+    
+    
+    
 
     
     
