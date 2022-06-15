@@ -18,7 +18,6 @@ public class Token {
         this.tipo = tipo;
     }
 
-    
     public String getLexema() {
         return lexema;
     }

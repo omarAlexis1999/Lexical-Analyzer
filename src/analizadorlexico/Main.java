@@ -11,10 +11,10 @@ package analizadorlexico;
  */
 public class Main {
     public static void main(String[] args) {
-        //AnalizadorLexico AnalizadorLexico = new AnalizadorLexico("boolean state = true;");
-        //AnalizadorLexico AnalizadorLexico = new AnalizadorLexico("String cadena = \"Hola mundo\";");
-        //AnalizadorLexico AnalizadorLexico = new AnalizadorLexico("int num=2.69;");
-        //AnalizadorLexico AnalizadorLexico = new AnalizadorLexico("num=2.6+3.8-5/8*5;");
-        AnalizadorLexico AnalizadorLexico = new AnalizadorLexico("if(5 == 4);");
+        AnalizadorLexico AnalizadorLexicoPrueba1 = new AnalizadorLexico("boolean state = true;");
+        AnalizadorLexico AnalizadorLexicoPrueba2 = new AnalizadorLexico("String cadena = \"Hola mundo\";");
+        AnalizadorLexico AnalizadorLexicoPrueba3 = new AnalizadorLexico("int num=2.69;");
+        AnalizadorLexico AnalizadorLexicoPrueba4 = new AnalizadorLexico("num=2.6+3.8-5/8*5;");
+        AnalizadorLexico AnalizadorLexicoPrueba5 = new AnalizadorLexico("if(5 == 4);");
     }
 }

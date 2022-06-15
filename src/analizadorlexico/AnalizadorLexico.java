@@ -15,16 +15,14 @@ public class AnalizadorLexico {
 
     private ArrayList<Token> tokens;
     private String codigoFuente;
-    private int estado;
     private String lexema;
 
     public AnalizadorLexico(String codigoFuente) {
         this.tokens = new ArrayList<>();
         this.codigoFuente = codigoFuente+" ";
-        this.estado = 0;
         this.lexema = "";
         analyzer();
-        //printTokens();
+        printTokens();
     }
     
     private void analyzer(){
@@ -118,14 +116,6 @@ public class AnalizadorLexico {
 
     public void setCodigoFuente(String codigoFuente) {
         this.codigoFuente = codigoFuente;
-    }
-
-    public int getEstado() {
-        return estado;
-    }
-
-    public void setEstado(int estado) {
-        this.estado = estado;
     }
 
     public String getLexema() {
